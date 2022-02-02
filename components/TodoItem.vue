@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-between">
+    <div class="todo-item flex justify-between">
       <span v-if="!editing" class="cut-text">{{ todo.title }}</span>
       <input
         v-else
@@ -9,11 +9,34 @@
         @keypress.enter="updateTodoIndex(todo)"
         class="border"
       />
-      <div>
-        <button v-if="editing" @click="updateTodoIndex(todo)">Update</button>
-        <button v-if="editing" @click="cancelToggle(todo)">Cancel</button>
-        <button v-else @click="toggleTodo(todo)">Edit</button>
-        <button @click="removeTodo(todo.id)">delete</button>
+      <div class=" ">
+        <button
+          class="transition-all duration-300 ease-in hover:text-yellow-400"
+          v-if="editing"
+          @click="updateTodoIndex(todo)"
+        >
+          Update
+        </button>
+        <button
+          class="transition-all duration-300 ease-in  hover:text-blue-600 "
+          v-if="editing"
+          @click="cancelToggle(todo)"
+        >
+          Cancel
+        </button>
+        <button
+          class="transition-all duration-300 ease-in  hover:text-yellow-400 "
+          v-else
+          @click="toggleTodo(todo)"
+        >
+          Edit
+        </button>
+        <button
+          class="transition-all duration-300 ease-in hover:text-red-500"
+          @click="removeTodo(todo.id)"
+        >
+          delete
+        </button>
       </div>
     </div>
   </div>
@@ -26,6 +49,7 @@ export default {
     return {
       editing: false,
       todoText: '',
+      disabled: false,
     }
   },
   computed: {
@@ -50,30 +74,25 @@ export default {
       await this.$store.dispatch('getToDoListFromAPI')
     },
 
-    updateTodoIndex(todo) {
+    async updateTodoIndex(todo) {
       let newTodo = {
         id: todo.id,
         title: this.todoText,
       }
-// ------------------
-      // let arrTodo = []
-      // arrTodo = [...state.todos]
-      // console.log('is', todo)
-      // let newTodo = arrTodo.map((thing) => {
-      //   if (todo.id === thing.id) {
-      //     return {
-      //       id: thing.id,
-      //       title: todo.title,
-      //     }
-      //   } else {
-      //     return thing
-      //   }
-      // })
-      // state.todos = [...newTodo]
-      // console.log(newTodo)
-// -------------------
       this.upTodo(newTodo)
-      console.log('updateTodoIndex', todo)
+
+      // let updateTodos = this.stateTodos.map((thing, index) => {
+      // console.log("index: ",index);
+      // console.log("thing: ",thing);
+      //   let newUpdataTodos = {
+      //     id: thing.id,
+      //     title: thing.title,
+      //   }
+      //   console.log('newUpdataTodos: ', newUpdataTodos)
+      // })
+      // console.log("4444: ",[...this.stateTodos] );
+
+      await this.$store.dispatch('updateToDoListFromApi', [...this.stateTodos])
 
       // this.$store.getters['allTodos']
       this.editing = false
@@ -96,5 +115,18 @@ export default {
   width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.todo-item {
+  transition: color 0.12s, transform 0.57s;
+  transition-timing-function: ease-out;
+  padding: 0.3em 0.5em;
+  box-sizing: border-box;
+  border: 1px solid #0000;
+}
+.todo-item:hover {
+  color: rgb(49, 38, 38);
+  border-color: rgb(255, 209, 6);
+  transform: translateX(0.5em) scaleX(0.98);
+  cursor: pointer;
 }
 </style>

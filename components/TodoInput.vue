@@ -6,7 +6,12 @@
       @keypress.enter="addTodoIndex"
       type="text"
     />
-    <button @click="addTodoIndex">ADD</button>
+    <button
+      class="transition-all duration-300 ease-in hover:text-green-400"
+      @click="addTodoIndex"
+    >
+      ADD
+    </button>
   </div>
 </template>
 

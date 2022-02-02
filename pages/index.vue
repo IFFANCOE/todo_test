@@ -1,35 +1,23 @@
 <template>
-  <div class="container ">
-    <!-- <div class="p-4 m-2 border ">
-      <h1 class="">Todo List</h1>
-      <input
-        class="border"
-        type="text"
-        v-model="newTask"
-        placeholder="Add a new task"
-        @keypress.enter="addTask"
-      />
-      <button @click="addTask">ADD</button>
-      <div class="tasks">
-        <!-- component -->
-        <!-- {{todolist}}
-        <Task
-          v-for="(task, index) in todolist"
-          :key="index"
-          :task="task"
-          :index="index"
-        /> --> 
-      <!-- </div>
-    </div> -->
-    <TodoInput/>
-    <TodoList/>
-    
+  <div>
+    <div class="flex justify-end p-6">
+      <button
+        class="bg-blue-600 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        @click="logout()"
+      >
+        Logout
+      </button>
+    </div>
+    <div class="todo-wrapper ">
+        <TodoInput />
+        <TodoList />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage',
+  middleware: 'isAuth',
   data() {
     return {
       // newTask: '',
@@ -37,31 +25,40 @@ export default {
     }
   },
   methods: {
-    // addTask() {
-    //   if (this.newTask) {
-    //     // this.$store.commit('ADD_TASK', this.newTask)
-    //     this.$store.dispatch('todolist/add_task', this.newTask)
-    //     this.newTask = ''
-    //   }
-    // },
-   
+    logout() {
+      localStorage.clear()
+      this.$router.go('/login')
+    },
   },
-  computed:{
+  computed: {
     // todolist(){
     //   return this.$store.getters['todolist/gettersTodo']
-      
     // }
-  }
+  },
 }
 </script>
 
 <style>
-.container {
-	display: block;
-	width: 400px;
-	margin: 10px auto 100px;
-	background-color:#fff;
-	padding:0px 10px 10px 10px;
-	border-radius:10px
+/* .container {
+  display: block;
+  width: 400px;
+  margin: 10px auto 100px;
+  background-color: #fff;
+  padding: 0px 10px 10px 10px;
+  border-radius: 10px;
+} */
+.todo-wrapper {
+  width: 400px;
+  max-width: 100%;
+  min-height: 500px;
+  margin: 20px auto 40px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 40px 20px;
+  -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.45);
+  background-color: #f4f7fc;
+  overflow: hidden;
+  position: relative;
 }
 </style>

@@ -1,17 +1,13 @@
 <template>
   <div>
-    {{ allTodos }}
-    <!-- {{ todos }} -->
-    <!-- {{ tests }} -->
     <div
-      class="flex flex-col justify-center"
+      class="flex flex-col justify-center mt-4 "
       v-for="(todo, index) in allTodos"
       :key="index"
       :index="todo.id"
     >
       <TodoItem :todo="todo" />
     </div>
-    <input type="text" v-model="test" />
   </div>
 </template>
 

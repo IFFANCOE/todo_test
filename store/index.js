@@ -1,15 +1,6 @@
 export const state = () => ({
-  todos: [
-    // {
-    //   id: '1',
-    //   title: 'one',
-    // },
-    // {
-    //   id: '2',
-    //   title: 'two',
-    // },
-  ],
-  //   test: ''
+  todos: [],
+  
 })
 export const mutations = {
   // add_todo(state, todo) {
@@ -34,7 +25,7 @@ export const mutations = {
       }
     })
     state.todos = [...newTodo]
-    console.log(newTodo)
+    // console.log(newTodo)
   },
   SET_TODO_FROM_API(state, data) {
     console.log('data: ', data)
@@ -64,7 +55,7 @@ export const actions = {
     // console.log("Go to mutations update_todo");
   },
   setToDoListFromApi(state, todo) {
-    // console.log('setToDoListFromLocal',todo);
+    console.log('setToDoListFromLocal',todo);
     const data = todo
     const newTodo = data.map((thing) => {
       return (thing = {
@@ -73,7 +64,7 @@ export const actions = {
     })
     this.$axios
       .$post(
-        'http://localhost:8080/api/dashboard/14',
+        `http://localhost:8080/api/dashboard/14`,
         { data: newTodo },
         {
           headers: {
@@ -89,6 +80,28 @@ export const actions = {
         alert('Add or Update Not Complete' + error)
       })
   },
+  updateToDoListFromApi(state, todo) {
+    console.log('setToDoListFromApi',todo);
+    const data = todo
+    this.$axios
+      .$post(
+        'http://localhost:8080/api/dashboard/14',
+        { data: data },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log('res: ', res)
+      })
+      .catch((err) => {
+        alert('Add or Update Not Complete' + error)
+      })
+  },
+  
   getToDoListFromAPI(state, todo) {
     this.$axios
       .$get(`http://localhost:8080/api/dashboard/14`, {
