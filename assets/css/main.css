@@ -14,4 +14,5 @@ body {
   position: relative;
   padding: 50px 20px;
   margin: 0;
+  overflow:hidden
 }

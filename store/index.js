@@ -1,6 +1,5 @@
 export const state = () => ({
   todos: [],
-  
 })
 export const mutations = {
   // add_todo(state, todo) {
@@ -14,16 +13,17 @@ export const mutations = {
     let arrTodo = []
     arrTodo = [...state.todos]
     console.log('is', todo)
-    let newTodo = arrTodo.map((thing) => {
-      if (todo.id === thing.id) {
-        return {
-          id: thing.id,
-          title: todo.title,
+      let newTodo = arrTodo.map((thing) => {
+        if (todo.id === thing.id) {
+          return {
+            id: thing.id,
+            title: todo.title,
+          }
+        } else {
+          return thing
         }
-      } else {
-        return thing
-      }
-    })
+      })
+
     state.todos = [...newTodo]
     // console.log(newTodo)
   },
@@ -55,7 +55,7 @@ export const actions = {
     // console.log("Go to mutations update_todo");
   },
   setToDoListFromApi(state, todo) {
-    console.log('setToDoListFromLocal',todo);
+    console.log('setToDoListFromLocal', todo)
     const data = todo
     const newTodo = data.map((thing) => {
       return (thing = {
@@ -81,7 +81,7 @@ export const actions = {
       })
   },
   updateToDoListFromApi(state, todo) {
-    console.log('setToDoListFromApi',todo);
+    console.log('setToDoListFromApi', todo)
     const data = todo
     this.$axios
       .$post(
@@ -101,7 +101,7 @@ export const actions = {
         alert('Add or Update Not Complete' + error)
       })
   },
-  
+
   getToDoListFromAPI(state, todo) {
     this.$axios
       .$get(`http://localhost:8080/api/dashboard/14`, {
